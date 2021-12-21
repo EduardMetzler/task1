@@ -1,0 +1,5 @@
+<input type="text" placeholder="userID"  [(ngModel)]="searchValue" >
+
+
+<button [disabled]='searchValue===""' (click)="send()">send</button> 
+<button (click)="reset()">reset</button> 

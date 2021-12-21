@@ -1,0 +1,20 @@
+
+<app-search (newMyPost)="getMyPst($event)"></app-search>
+
+<table *ngIf="placeholdersArray.length>0 && myPost.id==='';else  one">
+    <tr>
+      <th>Number</th>
+      <th>Title</th>
+      <th>Text</th>
+    </tr>
+    <tr *ngFor="let item of placeholdersArray">
+      <td>{{item.id}}</td>
+      <td>{{item.title}}</td>
+      <td>{{item.body}}</td>
+    </tr>
+
+  </table>
+
+  <ng-template #one>
+      <app-one-post   [myPost]="myPost"></app-one-post>
+  </ng-template>
