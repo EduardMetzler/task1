@@ -10,13 +10,15 @@ import { PlaceholderComponent } from './placeholder/placeholder.component';
 import { HttpClientModule } from '@angular/common/http';
 import { OnePostComponent } from './one-post/one-post.component';
 import { SearchComponent } from './search/search.component';
+import { SeachResultComponent } from './seach-result/seach-result.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PlaceholderComponent,
     OnePostComponent,
-    SearchComponent
+    SearchComponent,
+    SeachResultComponent
   ],
   imports: [
     BrowserModule,

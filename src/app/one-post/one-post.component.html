@@ -1,8 +1,21 @@
 <div >
-<h4> user:   {{myPost.id}}</h4>
+<!-- <h4> user:   {{myPost.id}}</h4>
  <h4>   {{myPost.title}}</h4>
-<h3>    {{myPost.body}}</h3>
+<h3>    {{myPost.body}}</h3> -->
 
 
 </div>
 
+<table *ngIf="myPost.length>0 ">
+    <tr>
+      <th>Number</th>
+      <th>Title</th>
+      <th>Text</th>
+    </tr>
+    <tr *ngFor="let item of myPost ">
+      <td>{{item.id}}</td>
+      <td>{{item.title}}</td>
+      <td>{{item.body}}</td>
+    </tr>
+
+  </table>

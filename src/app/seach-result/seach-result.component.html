@@ -1,0 +1,19 @@
+<p>seach-result works!</p>
+
+<table *ngIf="myPost.length > 0; else noResult">
+  <tr>
+    <th>Number</th>
+    <th>Title</th>
+    <th>Text</th>
+  </tr>
+  <tr *ngFor="let item of myPost">
+    <td>{{ item.id }}</td>
+    <td>{{ item.title }}</td>
+    <td>{{ item.body }}</td>
+  </tr>
+</table>
+
+<ng-template #noResult>
+  <p>Search: "{{search}}"</p>
+  <p>No matches</p>
+</ng-template>
