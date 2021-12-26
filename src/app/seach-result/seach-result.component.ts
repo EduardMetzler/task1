@@ -59,27 +59,7 @@ export class SeachResultComponent implements OnInit {
         )
         
       );
-      // this.myPost = this.filterPlaceholdersArray.filter((item:any)=>item.title.includes(this.search))
-   
 
-      // this.myPost = [{   id:"sss",
-      //   title:"frg",
-      //   body:"2",
-      //   userId:"dd"}]
-
-        // setTimeout(()=>{
-        //   this.myPost.push({   id:"sss",
-        //   title:"frg",
-        //   body:"2",
-        //   userId:"dd"})
-        // },2000)
-
-    // console.log(this.filterPlaceholdersArray )
-
-    // this.myPost = this.filterPlaceholdersArray.filter((item: any) =>
-    //   item.title.includes(this.search)
-    // );
-    // console.log(this.myPost)
   }
   postDelete(id:any) {
     console.log('sssssssss');

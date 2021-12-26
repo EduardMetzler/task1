@@ -7,7 +7,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   selector: 'app-placeholder',
   templateUrl: './placeholder.component.html',
   styleUrls: ['./placeholder.component.css'],
-  // providers: [PlaceholderService],
+
 })
 export class PlaceholderComponent {
   constructor(private placeholderService: PlaceholderService) {}
@@ -123,29 +123,26 @@ export class PlaceholderComponent {
 
   onePostUpdateSave(){
   
-    // this.filterPlaceholdersArray[this.update].body=this.newValue
-    // console.log(this.filterPlaceholdersArray)
+
     const post=this.filterPlaceholdersArray.find((item:any)=>item.id===this.update)
     console.log(post)
     post.body=this.newValue
 
     this.placeholderService.updatePlaceholders( post).subscribe((data) => {
-      // this.filterPlaceholdersArray[data.id].body=data.body
+ 
        console.log(data)
      });
 
 
   }
 
-  // onePostCreate(){
 
-  // }
 
   onSubmit(){
 console.log(this.form.value)
 
 this.placeholderService.createPlaceholders(this.form.value).subscribe((data) => {
-  // this.filterPlaceholdersArray[data.id].body=data.body
+
    console.log(data)
    this.filterPlaceholdersArray.push(data)
    console.log(this.placeholdersArray$)
@@ -154,22 +151,5 @@ this.placeholderService.createPlaceholders(this.form.value).subscribe((data) => 
 
   }
 
-  //   getmySearchValuet(date: any) {
-  //     // this.filterPlaceholdersArray= this.placeholdersArray
-  //     // console.log( this.myPost,this.filterPlaceholdersArray)
-  //     console.log(date)
-  //     this.searchValue = date;
-  //     if(date===""){
-  //       console.log(this.searchValue)
-  //       this.myPost=[]
-  //     }
-  //     this.myPost= this.filterPlaceholdersArray.filter((item:any)=>item.title.includes(this.searchValue))
 
-  //     // this.filterPlaceholdersArray=  this.filterPlaceholdersArray.filter((item:any)=> item.title.includes(this.searchValue))
-  // //  if( this.placeholdersArray[0].title.includes(this.searchValue)){
-  // //   // this.placeholdersArray[0].title.includes(this.searchValue)
-  // //  }
-  //     console.log( this.myPost)
-
-  //   }
 }
