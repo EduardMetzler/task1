@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule} from '@angular/forms';
+import { FormsModule,ReactiveFormsModule} from '@angular/forms';
+
+
 
 
 
@@ -11,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { OnePostComponent } from './one-post/one-post.component';
 import { SearchComponent } from './search/search.component';
 import { SeachResultComponent } from './seach-result/seach-result.component';
+import { TableComponent } from './table/table.component';
 
 @NgModule({
   declarations: [
@@ -18,13 +21,15 @@ import { SeachResultComponent } from './seach-result/seach-result.component';
     PlaceholderComponent,
     OnePostComponent,
     SearchComponent,
-    SeachResultComponent
+    SeachResultComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

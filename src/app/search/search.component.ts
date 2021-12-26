@@ -24,7 +24,11 @@ export class SearchComponent implements OnInit {
   }
 
   send() {
-    this.router.navigate([`/search`],{queryParams:{k:`${this.searchValue}`},relativeTo:this.route})
+    if(this.searchValue!==""){
+      this.router.navigate([`/search`],{queryParams:{k:`${this.searchValue}`},relativeTo:this.route})
+
+    }
+    
     // console.log(typeof(this.searchValue))
     // if (this.searchValue !== '') {
     //   // this.myPost = this.placeholdersArray[+this.searchValue - 1];
@@ -33,13 +37,13 @@ export class SearchComponent implements OnInit {
     //   // this.myPost = { id: '', title: '', body: '', userId: '' };
     // }
 
-    this.mySearchValue.emit(this.searchValue);
+    // this.mySearchValue.emit(this.searchValue);
   }
 
   reset() {
      // this.myPost = { id: '', title: '', body: '', userId: '' };
-     this.searchValue = '';
-     this.mySearchValue.emit(this.searchValue.trim());
+    //  this.searchValue = '';
+    //  this.mySearchValue.emit(this.searchValue.trim());
      // this.newMyPost.emit(this.myPost);
    }
 }

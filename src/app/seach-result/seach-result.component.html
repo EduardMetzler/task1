@@ -1,4 +1,4 @@
-<p>seach-result works!</p>
+
 
 <table *ngIf="myPost.length > 0; else noResult">
   <tr>
@@ -6,10 +6,10 @@
     <th>Title</th>
     <th>Text</th>
   </tr>
-  <tr *ngFor="let item of myPost">
+  <tr *ngFor="let item of myPost ">
     <td>{{ item.id }}</td>
     <td>{{ item.title }}</td>
-    <td>{{ item.body }}</td>
+    <td>{{ item.body }} <div (click)="postDelete(item.id)">delete</div></td>
   </tr>
 </table>
 
