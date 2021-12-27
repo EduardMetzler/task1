@@ -21,7 +21,7 @@ export class PlaceholderComponent {
 
 
 
-  sortSwitch=[false,true,true]
+  // sortSwitch=[false,true,true]
 
   filterPlaceholdersArray: any = [];
   searchValue: string = '';
@@ -50,6 +50,7 @@ export class PlaceholderComponent {
         .subscribe((date) => (this.placeholdersArray$ = date,
           this.filterPlaceholdersArray=date,console.log(date)));
     
+          console.log("wwwwwwwwwwwwwwwwwwwwwwwww")
     
 
 
@@ -59,67 +60,83 @@ export class PlaceholderComponent {
 
 
   }
+  getUpdatePostId($event:any){
+  this.update=$event
+  console.log(this.update)
+  const text= this.filterPlaceholdersArray.find((item:any)=>item.id===this.update)
+  this.newValue=text.body
 
-  postDelete(id:any) {
-
-    this.placeholderService.deletePlaceholders(id).subscribe((data) => {
-     this.filterPlaceholdersArray= this.filterPlaceholdersArray.filter(
-        (da: any) => da.id!==id
-      )
-      console.log(this.myPost)
-    });
 
 
   }
 
-  postUpdate(id:any){
-    this.update= id
- const a= this.filterPlaceholdersArray.find((item:any)=>item.id===id)
-  this.newValue=a.body
-
+  getNewPostListe($event:any){
+    this.filterPlaceholdersArray=$event
+    console.log($event)
   }
+
+//   postDelete(id:any) {
+
+//     this.placeholderService.deletePlaceholders(id).subscribe((data) => {
+//      this.filterPlaceholdersArray= this.filterPlaceholdersArray.filter(
+//         (da: any) => da.id!==id
+//       )
+//       console.log(this.myPost)
+//     });
+
+
+//   }
+
+//   postUpdate(id:any){
+//     this.update= id
+//  const a= this.filterPlaceholdersArray.find((item:any)=>item.id===id)
+//   this.newValue=a.body
+
+//   }
 
   postCreate(){
     this.create=true
 
   }
 
-  sort(type:any,n:number){
-    if(this.sortSwitch[n]){
-      this.filterPlaceholdersArray.sort((a:any,b:any)=>{
-        if ( a[type] > b[type] ){
-          return 1;
-        }
-        if ( a[type] < b[type] ){
-          return -1;
-        }
-        return 0;
-      } )
+  // sort(type:any,n:number){
+  //   if(this.sortSwitch[n]){
+  //     this.filterPlaceholdersArray.sort((a:any,b:any)=>{
+  //       if ( a[type] > b[type] ){
+  //         return 1;
+  //       }
+  //       if ( a[type] < b[type] ){
+  //         return -1;
+  //       }
+  //       return 0;
+  //     } )
 
-    }
-    else{
-      this.filterPlaceholdersArray.sort((a:any,b:any)=>{
-        if ( a[type] < b[type] ){
-          return 1;
-        }
-        if ( a[type] > b[type] ){
-          return -1;
-        }
-        return 0;
-      } )
-    }
+  //   }
+  //   else{
+  //     this.filterPlaceholdersArray.sort((a:any,b:any)=>{
+  //       if ( a[type] < b[type] ){
+  //         return 1;
+  //       }
+  //       if ( a[type] > b[type] ){
+  //         return -1;
+  //       }
+  //       return 0;
+  //     } )
+  //   }
 
-    this.sortSwitch[n]= !this.sortSwitch[n]
+  //   this.sortSwitch[n]= !this.sortSwitch[n]
 
     
 
-  }
+  // }
 
   backToList(){
     this.update= ""
     this.create=false
 
   }
+
+  
 
   onePostUpdateSave(){
   
@@ -128,7 +145,7 @@ export class PlaceholderComponent {
     console.log(post)
     post.body=this.newValue
 
-    this.placeholderService.updatePlaceholders( post).subscribe((data) => {
+    this.placeholderService.updatePlaceholders(post).subscribe((data) => {
  
        console.log(data)
      });
@@ -145,7 +162,7 @@ this.placeholderService.createPlaceholders(this.form.value).subscribe((data) => 
 
    console.log(data)
    this.filterPlaceholdersArray.push(data)
-   console.log(this.placeholdersArray$)
+  //  console.log(this.placeholdersArray$)
  });
 
 

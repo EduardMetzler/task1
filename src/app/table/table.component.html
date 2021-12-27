@@ -1,1 +1,26 @@
-<p>table works!</p>
+<table *ngIf="filterPlaceholdersArray && update==='' && !create; else loading">
+    
+    <tr>
+      <th class="sortCol" (click)="sort('id', 0)">Number</th>
+      <th class="sortCol" (click)="sort('title', 1)">Title</th>
+      <th class="sortCol" (click)="sort('body', 2)">Text</th>
+    </tr>
+
+    <tr *ngFor="let item of filterPlaceholdersArray">
+      <td>{{ item.id }}</td>
+      <td *ngIf="update !== item.id">{{ item.title }}</td>
+      <td *ngIf="update !== item.id">
+        {{ item.body }}
+     <div>
+      <button (click)="postDelete(item.id)">delete</button>
+      <button (click)="postUpdate(item.id)">update</button>
+     </div>
+      </td>
+      <div *ngIf="update === item.id">
+        <textarea cols="100" rows="10">{{ item.body }}</textarea>
+      </div>
+    </tr>
+  </table>
+
+
+<ng-template #loading> </ng-template>

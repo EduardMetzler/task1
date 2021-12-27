@@ -12,6 +12,8 @@ export class SearchComponent  {
   route: ActivatedRoute | null | undefined;
   constructor(private router:Router,) {}
   searchValue: string = '';
+  create=false
+
 
   placeholdersArray: any = [];
   @Output() mySearchValue = new EventEmitter<any>();
@@ -19,10 +21,10 @@ export class SearchComponent  {
 
 
   send() {
-    if(this.searchValue!==""){
-      this.router.navigate([`/search`],{queryParams:{k:`${this.searchValue}`},relativeTo:this.route})
+    // if(this.searchValue!==""){
+      this.router.navigate([`/search`],{queryParams:{k:`${this.searchValue.trim()}`},relativeTo:this.route})
 
-    }
+    // }
     
 
   }

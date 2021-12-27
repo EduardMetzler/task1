@@ -1,52 +1,44 @@
 <app-table></app-table>
 
-
 <div *ngIf="update === '' && create === false; else two">
   <app-search></app-search>
   <button (click)="postCreate()">create</button>
-  <table *ngIf="filterPlaceholdersArray; else loading">
-    <tr>
-      <th class="sortCol" (click)="sort('id', 0)">Number</th>
-      <th class="sortCol" (click)="sort('title', 1)">Title</th>
-      <th class="sortCol" (click)="sort('body', 2)">Text</th>
-    </tr>
-
-    <tr *ngFor="let item of filterPlaceholdersArray">
-      <td>{{ item.id }}</td>
-      <td *ngIf="update !== item.id">{{ item.title }}</td>
-      <td *ngIf="update !== item.id">
-        {{ item.body }}
-        <div (click)="postDelete(item.id)">delete</div>
-        <div (click)="postUpdate(item.id)">update</div>
-      </td>
-      <div *ngIf="update === item.id">
-        <textarea cols="100" rows="10">{{ item.body }}</textarea>
-      </div>
-    </tr>
-  </table>
 </div>
 
-<ng-template #loading> loading</ng-template>
+<app-table
+  *ngIf="update === ''"
+  [filterPlaceholdersArray]="filterPlaceholdersArray"
+  [create]="create"
+  (updatePostId)="getUpdatePostId($event)"
+  (filterPlaceholders)="getNewPostListe($event)"
+></app-table>
+
 <ng-template #two>
   <div *ngIf="update !== ''">
     <textarea [(ngModel)]="newValue" cols="100" rows="10"></textarea>
 
-    <div (click)="onePostUpdateSave()">save</div>
+    <div (click)="onePostUpdateSave()">save ff</div>
     <div (click)="backToList()">back</div>
   </div>
 
   <div *ngIf="create">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div>
-        <label>Title: </label>
+        <div>
+          <label>Title: </label>
+        </div>
 
         <input type="text" formControlName="title" />
       </div>
-      <label>Text: </label>
+      <div>
+        <label>Text: </label>
+      </div>
       <textarea formControlName="body" cols="100" rows="10"></textarea>
 
-      <button [disabled]="form.invalid" type="submit">save</button>
-      <div (click)="backToList()">back</div>
+      <div>
+        <button [disabled]="form.invalid" type="submit">save</button>
+        <button (click)="backToList()">back</button>
+      </div>
     </form>
   </div>
 </ng-template>
