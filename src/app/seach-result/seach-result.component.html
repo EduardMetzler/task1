@@ -1,30 +1,17 @@
 <app-search></app-search>
 
-
-<!-- <table *ngIf="myPost.length > 0; else noResult">
-  <tr>
-    <th>Number</th>
-    <th>Title</th>
-    <th>Text</th>
-  </tr>
-  <tr *ngFor="let item of myPost ">
-    <td>{{ item.id }}</td>
-    <td>{{ item.title }}</td>
-    <td>{{ item.body }} <div (click)="postDelete(item.id)">delete</div></td>
-  </tr>
-</table> -->
-
 <div *ngIf="update === '' && create === false; else two">
-  <app-table   [filterPlaceholdersArray]="filterPlaceholdersArray "   (updatePostId)="getUpdatePostId($event)"  (filterPlaceholders)="getNewPostListe($event)"></app-table>
+  <app-table
+    [filterPlaceholdersArray]="filterPlaceholdersArray"
+    (updatePostId)="getUpdatePostId($event)"
+    (filterPlaceholders)="getNewPostListe($event)"
+  ></app-table>
 </div>
 
-
-
 <ng-template #noResult>
-  <p>Search: "{{search}}"</p>
+  <p>Search: "{{ search }}"</p>
   <p>No matches</p>
 </ng-template>
-
 
 <ng-template #two>
   <div *ngIf="update !== ''">
@@ -33,6 +20,4 @@
     <div (click)="onePostUpdateSave()">save ff</div>
     <div (click)="backToList()">back</div>
   </div>
-
-
 </ng-template>

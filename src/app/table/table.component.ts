@@ -9,17 +9,16 @@ import { PlaceholderService } from '../service/placeholder.service';
 })
 export class TableComponent implements OnInit {
 
-  @Input() filterPlaceholdersArray:any
-  @Input() create:any
+  @Input() filterPlaceholdersArray: any
+  @Input() create: any
 
   @Output() updatePostId = new EventEmitter<string>();
   @Output() filterPlaceholders = new EventEmitter<any>();
 
-  // @Input() updatePostId:any
 
-  sortSwitch=[false,true,true]
-  update=""
-  newValue=""
+  sortSwitch = [false, true, true]
+  update = ""
+  newValue = ""
 
 
 
@@ -30,63 +29,63 @@ export class TableComponent implements OnInit {
 
   }
 
-  sort(type:any,n:number){
-    if(this.sortSwitch[n]){
-      this.filterPlaceholdersArray.sort((a:any,b:any)=>{
-        if ( a[type] > b[type] ){
+  sort(type: any, n: number) {
+    if (this.sortSwitch[n]) {
+      this.filterPlaceholdersArray.sort((a: any, b: any) => {
+        if (a[type] > b[type]) {
           return 1;
         }
-        if ( a[type] < b[type] ){
+        if (a[type] < b[type]) {
           return -1;
         }
         return 0;
-      } )
+      })
 
     }
-    else{
-      this.filterPlaceholdersArray.sort((a:any,b:any)=>{
-        if ( a[type] < b[type] ){
+    else {
+      this.filterPlaceholdersArray.sort((a: any, b: any) => {
+        if (a[type] < b[type]) {
           return 1;
         }
-        if ( a[type] > b[type] ){
+        if (a[type] > b[type]) {
           return -1;
         }
         return 0;
-      } )
+      })
     }
 
-    this.sortSwitch[n]= !this.sortSwitch[n]
+    this.sortSwitch[n] = !this.sortSwitch[n]
 
-    
+
 
   }
 
-  postDelete(id:any) {
+  postDelete(id: any) {
 
     this.placeholderService.deletePlaceholders(id).subscribe((data) => {
-     this.filterPlaceholdersArray= this.filterPlaceholdersArray.filter(
-        (data: any) => data.id!==id
+      this.filterPlaceholdersArray = this.filterPlaceholdersArray.filter(
+        (data: any) => data.id !== id
       )
-      console.log(data,id)
+      console.log(data, id)
     });
 
 
-setTimeout(()=>{
-  console.log(this.filterPlaceholdersArray)
-  this.filterPlaceholders.emit(this.filterPlaceholdersArray);
-},1000)
+    setTimeout(() => {
+      console.log(this.filterPlaceholdersArray)
+      this.filterPlaceholders.emit(this.filterPlaceholdersArray);
+    }, 1000)
 
 
 
   }
 
-  postUpdate(id:any){
-    this.update= id
- const a= this.filterPlaceholdersArray.find((item:any)=>item.id===id)
-  this.newValue=a.body
-  this.updatePostId.emit(id);
+  postUpdate(id: any) {
+    this.update = id
+    const a = this.filterPlaceholdersArray.find((item: any) => item.id === id)
+    this.newValue = a.body
+    this.updatePostId.emit(id);
 
   }
-  
+
 
 }
