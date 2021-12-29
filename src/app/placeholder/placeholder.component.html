@@ -1,16 +1,12 @@
-<app-table></app-table>
-
-<div *ngIf="update === '' && create === false; else two">
+<div>
   <app-search></app-search>
   <button (click)="postCreate()">create</button>
 </div>
 
 <app-table
-  *ngIf="update === ''"
-  [filterPlaceholdersArray]="filterPlaceholdersArray"
-  [create]="create"
+  [filterPlaceholdersArray]="posts$ | async"
   (updatePostId)="getUpdatePostId($event)"
-  (filterPlaceholders)="getNewPostListe($event)"
+  (deletePostId)="onDeletePost($event)"
 ></app-table>
 
 <ng-template #two>

@@ -1,6 +1,6 @@
 export interface OnePost {
-    id:string;
-    title:string;
-    body:string;
-    userId:string;
+  id: number;
+  title: string;
+  body: string;
+  userId: string;
 }

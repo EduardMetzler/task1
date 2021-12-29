@@ -5,7 +5,9 @@ import { SeachResultComponent } from './seach-result/seach-result.component';
 
 const routes: Routes = [
   {path:"",component:PlaceholderComponent},
-  {path:"search",component:SeachResultComponent}
+
+  {path:"create",component:SeachResultComponent},
+  {path:"edit/:id",component:SeachResultComponent}
 
 ];
 

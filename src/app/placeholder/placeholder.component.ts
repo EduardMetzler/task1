@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { PlaceholderService } from '../service/placeholder.service';
 import { OnePost } from '../interface';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { combineLatest, BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-placeholder',
@@ -9,7 +12,23 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./placeholder.component.css'],
 })
 export class PlaceholderComponent {
-  constructor(private placeholderService: PlaceholderService) {}
+  posts$ = combineLatest([
+    this.route.queryParamMap,
+    this.placeholderService.posts$,
+  ]).pipe(
+    map(([queryParamsMap, posts]) => {
+      const query = queryParamsMap.get('k');
+      if (!query) {
+        return posts;
+      }
+      return posts.filter((post) => post.title.includes(query));
+    })
+  );
+
+  constructor(
+    private placeholderService: PlaceholderService,
+    private route: ActivatedRoute
+  ) {}
 
   placeholdersArray$: any = [];
   update = '';
@@ -31,17 +50,7 @@ export class PlaceholderComponent {
     body: new FormControl('', Validators.required),
   });
   ngOnInit() {
-    this.placeholderService
-      .getPlaceholders()
-      .subscribe(
-        (date) => (
-          (this.placeholdersArray$ = date),
-          (this.filterPlaceholdersArray = date),
-          console.log(date)
-        )
-      );
-
-
+    this.placeholderService.getPlaceholders();
 
     // this.placeholdersArray$ = this.placeholderService.getPlaceholders();
     // this.filterPlaceholdersArray = this.placeholdersArray$
@@ -53,7 +62,7 @@ export class PlaceholderComponent {
       (item: any) => item.id === this.update
     );
     this.newValue = text.body;
-    console.log(this.newValue)
+    console.log(this.newValue);
   }
 
   getNewPostListe($event: any) {
@@ -91,5 +100,9 @@ export class PlaceholderComponent {
         console.log(data);
         this.filterPlaceholdersArray.push(data);
       });
+  }
+
+  onDeletePost(id: number) {
+    this.placeholderService.deletePlaceholders(id);
   }
 }

@@ -17,7 +17,7 @@ export class SearchComponent {
   @Output() mySearchValue = new EventEmitter<any>();
 
   send() {
-    this.router.navigate([`/search`], {
+    this.router.navigate([``], {
       queryParams: { k: `${this.searchValue.trim()}` },
       relativeTo: this.route,
     });

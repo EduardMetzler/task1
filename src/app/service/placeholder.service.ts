@@ -1,21 +1,35 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { OnePost } from '../interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PlaceholderService {
+  posts$ = new BehaviorSubject<OnePost[]>([]);
+
   constructor(private http: HttpClient) {}
 
   private url = 'https://jsonplaceholder.typicode.com/posts';
 
-  getPlaceholders(): Observable<any> {
-    return this.http.get<any>(this.url);
+  getPlaceholders() {
+    this.http.get<OnePost[]>(this.url).subscribe(posts => {
+      this.posts$.next(posts);
+    });
   }
 
-  deletePlaceholders(id: any): Observable<any> {
-    return this.http.delete<any>(`${this.url}/${id}`);
+  deletePlaceholders(id: any) {
+    this.http.delete<any>(`${this.url}/${id}`).subscribe({
+      next: () => {
+        const posts = this.posts$.getValue();
+        const withouthPosts = posts.filter(p => p.id !== id);
+        this.posts$.next(withouthPosts);
+      },
+      error: e => {
+        console.log('Failed to delete');
+      }
+    });
   }
   updatePlaceholders(post: any): Observable<any> {
     return this.http.put<any>(`${this.url}/${post.id}`, {

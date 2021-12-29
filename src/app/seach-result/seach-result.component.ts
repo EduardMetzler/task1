@@ -34,14 +34,6 @@ export class SeachResultComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.placeholderService
-      .getPlaceholders()
-      .subscribe(
-        (date) => (
-          (this.placeholdersArray = date), (this.filterPlaceholdersArray = date)
-        )
-      );
-
     // this.search = this.route.snapshot.params['search'];
 
     //  this.route.params.subscribe((params:Params)=>{this.search=params["search"]})
