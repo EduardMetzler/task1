@@ -1,0 +1,36 @@
+<!-- <div  *ngFor="let post of posts$ | async"> -->
+
+<!-- <form *ngIf="posts$ | async as post" [formGroup]="post" (ngSubmit)="onSubmit()">
+        <div>
+          <div>
+            <label>Title: </label>
+          </div>
+    
+    
+          <input type="text" formControlName="title" />
+        </div>
+        <div>
+          <label>Text: </label>
+        </div>
+        <textarea formControlName="body" cols="100" rows="10"></textarea>
+    
+        <div>
+          <button [disabled]="form.invalid" type="submit">save</button>
+          <button (click)="backToList()">back</button>
+        </div>
+      </form> -->
+
+<!-- </div>  -->
+
+<div *ngFor="let post of posts$ | async">
+  <div>{{ post.id }}</div>
+  <div>{{ post.userId }}</div>
+
+  <textarea [(ngModel)]="myPost[0].title" cols="100" rows="10"></textarea>
+  <textarea [(ngModel)]="myPost[0].body" cols="100" rows="10"></textarea>
+
+  <div>
+    <button type="submit" (click)="onSubmit()">save</button>
+    <button (click)="backToList()">back</button>
+  </div>
+</div>

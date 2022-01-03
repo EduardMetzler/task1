@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PlaceholderService } from '../service/placeholder.service';
 import { OnePost } from '../interface';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -25,15 +25,16 @@ export class PlaceholderComponent {
     })
   );
 
+  // posts$=this.placeholderService.getPlaceholders();
+
   constructor(
     private placeholderService: PlaceholderService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   placeholdersArray$: any = [];
   update = '';
-
-  create = false;
 
   filterPlaceholdersArray: any = [];
   searchValue: string = '';
@@ -41,14 +42,6 @@ export class PlaceholderComponent {
   newValue = '';
   newPost = { id: '', title: '', body: 'dd' };
 
-  form: FormGroup = new FormGroup({
-    id: new FormControl('12'),
-
-    userId: new FormControl('12'),
-
-    title: new FormControl('', Validators.required),
-    body: new FormControl('', Validators.required),
-  });
   ngOnInit() {
     this.placeholderService.getPlaceholders();
 
@@ -56,13 +49,8 @@ export class PlaceholderComponent {
     // this.filterPlaceholdersArray = this.placeholdersArray$
   }
   getUpdatePostId($event: any) {
-    this.update = $event;
-    console.log(this.update);
-    const text = this.filterPlaceholdersArray.find(
-      (item: any) => item.id === this.update
-    );
-    this.newValue = text.body;
-    console.log(this.newValue);
+    this.router.navigate([`update/${$event}`]);
+    console.log($event);
   }
 
   getNewPostListe($event: any) {
@@ -71,35 +59,7 @@ export class PlaceholderComponent {
   }
 
   postCreate() {
-    this.create = true;
-  }
-
-  backToList() {
-    this.update = '';
-    this.create = false;
-  }
-
-  onePostUpdateSave() {
-    const post = this.filterPlaceholdersArray.find(
-      (item: any) => item.id === this.update
-    );
-    console.log(post);
-    post.body = this.newValue;
-
-    this.placeholderService.updatePlaceholders(post).subscribe((data) => {
-      console.log(data);
-    });
-  }
-
-  onSubmit() {
-    console.log(this.form.value);
-
-    this.placeholderService
-      .createPlaceholders(this.form.value)
-      .subscribe((data) => {
-        console.log(data);
-        this.filterPlaceholdersArray.push(data);
-      });
+    this.router.navigate([`create`]);
   }
 
   onDeletePost(id: number) {

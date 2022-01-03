@@ -14,8 +14,10 @@ export class PlaceholderService {
   private url = 'https://jsonplaceholder.typicode.com/posts';
 
   getPlaceholders() {
-    this.http.get<OnePost[]>(this.url).subscribe(posts => {
-      this.posts$.next(posts);
+    this.http.get<OnePost[]>(this.url).subscribe((posts) => {
+      if (this.posts$.value.length === 0) {
+        return this.posts$.next(posts);
+      }
     });
   }
 
@@ -23,29 +25,55 @@ export class PlaceholderService {
     this.http.delete<any>(`${this.url}/${id}`).subscribe({
       next: () => {
         const posts = this.posts$.getValue();
-        const withouthPosts = posts.filter(p => p.id !== id);
+        const withouthPosts = posts.filter((p) => p.id !== id);
+
         this.posts$.next(withouthPosts);
       },
-      error: e => {
+      error: (e) => {
         console.log('Failed to delete');
-      }
-    });
-  }
-  updatePlaceholders(post: any): Observable<any> {
-    return this.http.put<any>(`${this.url}/${post.id}`, {
-      id: post.id,
-      title: post.title,
-      body: post.body,
-      userId: post.userId,
+      },
     });
   }
 
-  createPlaceholders(post: any): Observable<any> {
-    return this.http.post<any>(`${this.url}`, {
-      id: post.id,
-      title: post.title,
-      body: post.body,
-      userId: post.userId,
-    });
+  createPlaceholders(post: OnePost) {
+    this.http
+      .post<OnePost>(`${this.url}`, {
+        id: post.id,
+        title: post.title,
+        body: post.body,
+        userId: post.userId,
+      })
+      .subscribe({
+        next: (newPost: any) => {
+          const posts = this.posts$.getValue();
+          posts.push(newPost);
+          this.posts$.next(posts);
+        },
+        error: (e) => {
+          console.log('Failed to delete');
+        },
+      });
+  }
+
+  updatePlaceholders(post: OnePost) {
+    this.http
+      .put<any>(`${this.url}/${post.id}`, {
+        id: post.id,
+        title: post.title,
+        body: post.body,
+        userId: post.userId,
+      })
+      .subscribe({
+        next: (updatedPost: any) => {
+          const posts = this.posts$.getValue();
+          const newPost = posts.filter((post) => post.id !== updatedPost.id);
+
+          newPost.push(updatedPost);
+          this.posts$.next(newPost);
+        },
+        error: (e) => {
+          console.log('Failed to delete');
+        },
+      });
   }
 }

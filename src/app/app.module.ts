@@ -10,6 +10,9 @@ import { OnePostComponent } from './one-post/one-post.component';
 import { SearchComponent } from './search/search.component';
 import { SeachResultComponent } from './seach-result/seach-result.component';
 import { TableComponent } from './table/table.component';
+import { CreateComponent } from './create/create.component';
+import { UpdateComponent } from './update/update.component';
+
 
 @NgModule({
   declarations: [
@@ -19,6 +22,9 @@ import { TableComponent } from './table/table.component';
     SearchComponent,
     SeachResultComponent,
     TableComponent,
+    CreateComponent,
+    UpdateComponent,
+
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,18 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div>
+    <div>
+      <label>Title: </label>
+    </div>
+
+    <input type="text" formControlName="title" />
+  </div>
+  <div>
+    <label>Text: </label>
+  </div>
+  <textarea formControlName="body" cols="100" rows="10"></textarea>
+
+  <div>
+    <button [disabled]="form.invalid" type="submit">save</button>
+    <button (click)="backToList()">back</button>
+  </div>
+</form>

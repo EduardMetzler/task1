@@ -1,21 +1,25 @@
-<table>
-  <tr>
-    <th class="sortCol" (click)="sort('id')">Number</th>
-    <th class="sortCol" (click)="sort('title')">Title</th>
-    <th class="sortCol" (click)="sort('body')">Text</th>
-  </tr>
+<div *ngIf="filterPlaceholdersArray.length !== 0; else noResult">
+  <table>
+    <tr>
+      <th class="sortCol" (click)="sort('id')">Number</th>
+      <th class="sortCol" (click)="sort('title')">Title</th>
+      <th class="sortCol" (click)="sort('body')">Text</th>
+    </tr>
 
-  <tr *ngFor="let item of filterPlaceholdersArray">
-    <td>{{ item.id }}</td>
-    <td>{{ item.title }}</td>
-    <td>
-      {{ item.body }}
-      <div>
-        <button (click)="postDelete(item.id)">delete</button>
-        <button (click)="postUpdate(item.id)">update</button>
-      </div>
-    </td>
-  </tr>
-</table>
+    <tr *ngFor="let item of filterPlaceholdersArray">
+      <td>{{ item.id }}</td>
+      <td>{{ item.title }}</td>
+      <td>
+        {{ item.body }}
+        <div>
+          <button (click)="postDelete(item.id)">delete</button>
+          <button (click)="postUpdate(item.id)">update</button>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
 
-<ng-template #loading> </ng-template>
+<ng-template #noResult>
+  <p>No matches</p>
+</ng-template>

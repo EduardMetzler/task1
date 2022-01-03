@@ -9,32 +9,4 @@
   (deletePostId)="onDeletePost($event)"
 ></app-table>
 
-<ng-template #two>
-  <div *ngIf="update !== ''">
-    <textarea [(ngModel)]="newValue" cols="100" rows="10"></textarea>
 
-    <div (click)="onePostUpdateSave()">save ff</div>
-    <div (click)="backToList()">back</div>
-  </div>
-
-  <div *ngIf="create">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div>
-        <div>
-          <label>Title: </label>
-        </div>
-
-        <input type="text" formControlName="title" />
-      </div>
-      <div>
-        <label>Text: </label>
-      </div>
-      <textarea formControlName="body" cols="100" rows="10"></textarea>
-
-      <div>
-        <button [disabled]="form.invalid" type="submit">save</button>
-        <button (click)="backToList()">back</button>
-      </div>
-    </form>
-  </div>
-</ng-template>

@@ -14,7 +14,7 @@ export class TableComponent implements OnInit {
   @Output() deletePostId = new EventEmitter<number>();
 
   defaultSort = {
-    type: 'desc',
+    type: 'asc',
     key: 'id',
   };
 
@@ -22,9 +22,13 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.sortPosts();
+    
   }
 
   sort(property: string) {
+    console.log(this.filterPlaceholdersArray.length)
+    
+
     const { key, type } = this.defaultSort;
     if (property === key) {
       if (type === 'asc') {
