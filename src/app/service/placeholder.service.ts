@@ -57,7 +57,7 @@ export class PlaceholderService {
 
   updatePlaceholders(post: OnePost) {
     this.http
-      .put<any>(`${this.url}/${post.id}`, {
+      .put<OnePost>(`${this.url}/${post.id}`, {
         id: post.id,
         title: post.title,
         body: post.body,

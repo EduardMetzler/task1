@@ -67,13 +67,13 @@ export class SeachResultComponent implements OnInit {
     this.newValue = text.body;
   }
 
-  backToList() {
-    this.update = '';
-    this.create = false;
-  }
+
 
   getNewPostListe($event: any) {
     this.filterPlaceholdersArray = $event;
     console.log($event);
+  }
+  backToList() {
+    this.router.navigate([``]);
   }
 }

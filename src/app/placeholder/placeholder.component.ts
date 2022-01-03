@@ -65,4 +65,6 @@ export class PlaceholderComponent {
   onDeletePost(id: number) {
     this.placeholderService.deletePlaceholders(id);
   }
+
+  
 }

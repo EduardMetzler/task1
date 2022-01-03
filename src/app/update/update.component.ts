@@ -9,6 +9,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { OnePost } from '../interface';
 
 @Component({
   selector: 'app-update',
@@ -22,33 +23,32 @@ export class UpdateComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder
   ) {}
-  myPost = [{ userId: '', id: 1, title: '', body: '' }];
+
+  myPost:OnePost[] = [{ userId: '', id: 1, title: '', body: '' }];
 
   posts$ = combineLatest([this.placeholderService.posts$]).pipe(
     map(([posts]) => {
-      posts.filter((post) => post.id === +this.id);
-      console.log(posts.filter((post) => post.id === +this.id));
-      this.myPost = posts.filter((post) => post.id === +this.id);
+      posts.filter((post:OnePost) => post.id === +this.id);
+      console.log(posts.filter((post:OnePost) => post.id === +this.id));
+      this.myPost = posts.filter((post:OnePost) => post.id === +this.id);
       console.log(this.myPost);
       return posts.filter((post) => post.id === +this.id);
     })
   );
-
-  // posts$:any
+  // form: FormGroup = new FormGroup({
+  //   id: new FormControl('101'),
+  //   userId: new FormControl('12'),
+  //   title: new FormControl(this.myPost[0].title, Validators.required),
+  //   body: new FormControl(this.myPost[0].body, Validators.required),
+  // });
 
   id: number = 0;
+
   ngOnInit() {
     this.placeholderService.getPlaceholders();
 
     this.id = this.route.snapshot.params['id'];
   }
-
-  // form: FormGroup = new FormGroup({
-  //   id: new FormControl('101'),
-  //   userId: new FormControl('12'),
-  //   title: new FormControl(`${this.myPost[0].title}`, Validators.required),
-  //   body: new FormControl('rt', Validators.required),
-  // });
 
   backToList() {
     this.router.navigate([``]);
@@ -56,6 +56,5 @@ export class UpdateComponent implements OnInit {
 
   onSubmit() {
     this.placeholderService.updatePlaceholders(this.myPost[0]);
-    console.log(this.myPost[0]);
   }
 }
