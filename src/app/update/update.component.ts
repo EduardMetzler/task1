@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { PlaceholderService } from '../service/placeholder.service';
@@ -16,7 +16,7 @@ import { OnePost } from '../interface';
   templateUrl: './update.component.html',
   styleUrls: ['./update.component.css'],
 })
-export class UpdateComponent implements OnInit {
+export class UpdateComponent implements OnInit, OnDestroy {
   constructor(
     private placeholderService: PlaceholderService,
     private route: ActivatedRoute,
@@ -26,14 +26,24 @@ export class UpdateComponent implements OnInit {
 
   myPost: any = { id: 1, title: '', body: '', userId: '' };
 
+  a: any = null;
+
   posts$ = combineLatest([
     this.placeholderService.posts$,
     this.route.params,
   ]).pipe(
     map(([posts, paramsId]) => {
       const params = paramsId['id'];
-
+      console.log('comb');
       this.myPost = posts.find((post: any) => post.id === +params);
+      if (this.myPost !== undefined) {
+        this.form.patchValue({
+          id: this.myPost.id,
+          userId: this.myPost.userId,
+          title: this.myPost.title,
+          body: this.myPost.body,
+        });
+      }
 
       return posts.find((post) => post.id === +params);
     })
@@ -46,27 +56,30 @@ export class UpdateComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.posts$.subscribe();
+    // this.posts$.subscribe();
     this.placeholderService.getPlaceholders();
 
-    this.route.params;
+    // this.route.params;
 
+    this.a = this.posts$.subscribe();
+
+    1 + this.subscribe();
     console.log(this.myPost);
-    setTimeout(() => {
-      this.form.patchValue({
-        id: this.myPost.id,
-        userId: this.myPost.userId,
-        title: this.myPost.title,
-        body: this.myPost.body,
-      });
-    }, 1000);
   }
 
   backToList() {
     this.router.navigate([``]);
   }
 
+  subscribe() {
+    return 1;
+  }
+
   onSubmit() {
     this.placeholderService.updatePlaceholders(this.form.value);
+  }
+
+  ngOnDestroy(): void {
+    this.a.unsubscribe();
   }
 }

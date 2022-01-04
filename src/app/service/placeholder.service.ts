@@ -68,11 +68,11 @@ export class PlaceholderService {
       .subscribe({
         next: (updatedPost: any) => {
           const posts = this.posts$.getValue();
-          const newPost = posts.filter((post) => post.id !== updatedPost.id);
-          console.log(updatedPost);
+          const newPost = posts.map((post) => {
+            return post.id === updatedPost.id ? updatedPost : post;
+          });
 
-          newPost.push(updatedPost);
-          console.log(newPost);
+          this.router.navigate([``]);
 
           this.posts$.next(newPost);
         },
