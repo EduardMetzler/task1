@@ -12,6 +12,7 @@ import { SeachResultComponent } from './seach-result/seach-result.component';
 import { TableComponent } from './table/table.component';
 import { CreateComponent } from './create/create.component';
 import { UpdateComponent } from './update/update.component';
+import { PostDetailsComponent } from './post-details/post-details.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { UpdateComponent } from './update/update.component';
     TableComponent,
     CreateComponent,
     UpdateComponent,
+    PostDetailsComponent,
 
   ],
   imports: [

@@ -1,0 +1,9 @@
+<div *ngIf="posts$ | async as posts">
+  <h2>Post details</h2>
+  <p>User id: {{ posts.userId }}</p>
+  <p>Post id: {{ posts.id }}</p>
+  <p>{{ posts.title }}</p>
+  <p>{{ posts.body }}</p>
+  <button (click)="postDelete(posts.id)">delete</button>
+  <button (click)="postUpdate(posts.id)">update</button>
+</div>

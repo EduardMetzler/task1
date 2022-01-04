@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { OnePost } from '../interface';
 import { PlaceholderService } from '../service/placeholder.service';
 
@@ -18,16 +19,17 @@ export class TableComponent implements OnInit {
     key: 'id',
   };
 
-  constructor(private placeholderService: PlaceholderService) {}
+  constructor(
+    private placeholderService: PlaceholderService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.sortPosts();
-    
   }
 
   sort(property: string) {
-    console.log(this.filterPlaceholdersArray.length)
-    
+    console.log(this.filterPlaceholdersArray.length);
 
     const { key, type } = this.defaultSort;
     if (property === key) {
@@ -86,5 +88,9 @@ export class TableComponent implements OnInit {
 
   postUpdate(id: any) {
     this.updatePostId.emit(id);
+  }
+
+  toPostDetails(id: string) {
+    this.router.navigate([`post/${id}`]);
   }
 }
