@@ -2,9 +2,9 @@
   <div>
     <label>User id:</label>
   </div>
-
-  <select (change)="userIdandNameSave($event)">
-    <option *ngFor="let element of userList" [value]="element.id">
+  <!-- (change)="userIdandNameSave($event)" -->
+  <select formControlName="userId" >
+    <option  *ngFor="let element of userList" [value]="element.id">
       {{ element.id }}
     </option>
   </select>

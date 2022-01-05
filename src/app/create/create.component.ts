@@ -30,14 +30,13 @@ export class CreateComponent implements OnInit {
           userName: this.userList[0].username,
         })
       }
-      // console.log(this.form.value)
 
       return users
     }),
   )
   form: FormGroup = new FormGroup({
     id: new FormControl(''),
-    userId: new FormControl(),
+    userId: new FormControl(this.userList, Validators.required),
     title: new FormControl('', Validators.required),
     body: new FormControl('', Validators.required),
 
@@ -48,6 +47,14 @@ export class CreateComponent implements OnInit {
     this.placeholderService.getPlaceholders()
 
     this.userSubscribe = this.users$.subscribe()
+
+    this.form.valueChanges.subscribe((selectedValue) => {
+      console.log('form value changed')
+
+      if (this.form.value.userId != selectedValue.userId) {
+        console.log('ssssssssssss')
+      }
+    })
   }
 
   backToList() {
@@ -56,22 +63,19 @@ export class CreateComponent implements OnInit {
   }
 
   onSubmit() {
-    this.placeholderService.createPlaceholders(this.form.value)
     console.log(this.form.value)
-  }
-
-  userIdandNameSave(e: any) {
 
     const myUserName = this.userList.find((item: any) => {
-      return item.id === +e.target.value
+      return item.id == this.form.value.userId
     })
-
+    console.log(myUserName)
 
     this.form.patchValue({
-      userId: e.target.value,
       userName: myUserName.username,
     })
+    this.placeholderService.createPlaceholders(this.form.value)
   }
+
   ngOnDestroy(): void {
     this.userSubscribe.unsubscribe()
   }

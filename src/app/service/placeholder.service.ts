@@ -19,7 +19,7 @@ export class PlaceholderService {
   getPlaceholders() {
     this.http.get<OnePost[]>(this.url).subscribe((posts) => {
       if (this.posts$.value.length === 0) {
-        console.log(posts)
+        // console.log(posts)
         return this.posts$.next(posts)
       }
     })
@@ -34,6 +34,9 @@ export class PlaceholderService {
           return this.users$.next(userArray)
         }
       })
+
+ 
+
   }
 
   deletePlaceholders(id: any) {
@@ -51,7 +54,7 @@ export class PlaceholderService {
     })
   }
 
-  createPlaceholders(post: OnePost) {
+  createPlaceholders(post: any) {
     this.http
       .post<OnePost>(`${this.url}`, {
         id: post.id,
@@ -61,8 +64,13 @@ export class PlaceholderService {
       })
       .subscribe({
         next: (newPost: any) => {
+          console.log(post.id)
           const posts = this.posts$.getValue()
+          newPost.userId = post.userId,
+          newPost.userName = post.userName
           posts.push(newPost)
+          console.log(posts)
+
           this.posts$.next(posts)
         },
         error: (e) => {
