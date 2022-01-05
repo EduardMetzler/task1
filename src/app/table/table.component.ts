@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { OnePost } from '../interface';
-import { PlaceholderService } from '../service/placeholder.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Router } from '@angular/router'
+import { OnePost } from '../interface'
+import { PlaceholderService } from '../service/placeholder.service'
 
 @Component({
   selector: 'app-table',
@@ -9,49 +9,51 @@ import { PlaceholderService } from '../service/placeholder.service';
   styleUrls: ['./table.component.css'],
 })
 export class TableComponent implements OnInit {
-  @Input() filterPlaceholdersArray: OnePost[] | any = [];
+  @Input() filterPlaceholdersArray: OnePost[] | any = []
 
-  @Output() updatePostId = new EventEmitter<string>();
-  @Output() deletePostId = new EventEmitter<number>();
+  @Output() updatePostId = new EventEmitter<string>()
+  @Output() deletePostId = new EventEmitter<number>()
+
+  // users$=this.placeholderService.users$
 
   defaultSort = {
     type: 'asc',
     key: 'id',
-  };
+  }
 
   constructor(
     private placeholderService: PlaceholderService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
-    this.sortPosts();
+    this.sortPosts()
   }
 
   sort(property: string) {
-    console.log(this.filterPlaceholdersArray.length);
+    console.log(this.filterPlaceholdersArray.length)
 
-    const { key, type } = this.defaultSort;
+    const { key, type } = this.defaultSort
     if (property === key) {
       if (type === 'asc') {
         this.defaultSort = {
           key,
           type: 'desc',
-        };
+        }
       } else {
         this.defaultSort = {
           key,
           type: 'asc',
-        };
+        }
       }
     } else if (property !== key) {
       this.defaultSort = {
         key: property,
         type: 'asc',
-      };
+      }
     }
 
-    this.sortPosts();
+    this.sortPosts()
   }
 
   sortPosts() {
@@ -59,38 +61,38 @@ export class TableComponent implements OnInit {
       case 'desc':
         this.filterPlaceholdersArray.sort((a: any, b: any) => {
           if (a[this.defaultSort.key] < b[this.defaultSort.key]) {
-            return 1;
+            return 1
           }
           if (a[this.defaultSort.key] > b[this.defaultSort.key]) {
-            return -1;
+            return -1
           }
-          return 0;
-        });
-        break;
+          return 0
+        })
+        break
       case 'asc':
       default:
         this.filterPlaceholdersArray.sort((a: any, b: any) => {
           if (a[this.defaultSort.key] > b[this.defaultSort.key]) {
-            return 1;
+            return 1
           }
           if (a[this.defaultSort.key] < b[this.defaultSort.key]) {
-            return -1;
+            return -1
           }
-          return 0;
-        });
-        break;
+          return 0
+        })
+        break
     }
   }
 
   postDelete(id: any) {
-    this.deletePostId.emit(id);
+    this.deletePostId.emit(id)
   }
 
   postUpdate(id: any) {
-    this.updatePostId.emit(id);
+    this.updatePostId.emit(id)
   }
 
   toPostDetails(id: string) {
-    this.router.navigate([`post/${id}`]);
+    this.router.navigate([`post/${id}`])
   }
 }

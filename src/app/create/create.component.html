@@ -1,13 +1,24 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div>
+    <label>User id:</label>
+  </div>
+
+  <select (change)="userIdandNameSave($event)">
+    <option *ngFor="let element of userList" [value]="element.id">
+      {{ element.id }}
+    </option>
+  </select>
+  <div>
+    <br />
     <div>
-      <label>Title: </label>
+      <label>Title:</label>
     </div>
 
     <input type="text" formControlName="title" />
   </div>
+  <br />
   <div>
-    <label>Text: </label>
+    <label>Text:</label>
   </div>
   <textarea formControlName="body" cols="100" rows="10"></textarea>
 
