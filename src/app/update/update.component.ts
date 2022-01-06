@@ -27,19 +27,21 @@ export class UpdateComponent implements OnInit, OnDestroy {
   myPost: any = { id: 1, title: '', body: '', userId: '' };
 
   a: any = null;
+  users$ = this.placeholderService.users$
+
 
   posts$ = combineLatest([
     this.placeholderService.posts$,
     this.route.params,
   ]).pipe(
-    map(([posts, paramsId]) => {
+    map(([posts, paramsId,]) => {
       const params = paramsId['id'];
       console.log('comb');
       this.myPost = posts.find((post: any) => post.id === +params);
       if (this.myPost !== undefined) {
         this.form.patchValue({
           id: this.myPost.id,
-          userId: this.myPost.userId,
+          userId: +this.myPost.userId,
           title: this.myPost.title,
           body: this.myPost.body,
         });
@@ -50,7 +52,7 @@ export class UpdateComponent implements OnInit, OnDestroy {
   );
   form: FormGroup = new FormGroup({
     id: new FormControl(''),
-    userId: new FormControl(''),
+    userId: new FormControl(),
     title: new FormControl('', Validators.required),
     body: new FormControl('', Validators.required),
   });
@@ -58,6 +60,9 @@ export class UpdateComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // this.posts$.subscribe();
     this.placeholderService.getPlaceholders();
+    this.placeholderService.getUsersList();
+
+    
 
     // this.route.params;
 
@@ -77,6 +82,7 @@ export class UpdateComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.placeholderService.updatePlaceholders(this.form.value);
+    console.log(this.form.value)
   }
 
   ngOnDestroy(): void {

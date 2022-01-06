@@ -2,7 +2,7 @@
   <table>
     <tr>
       <th class="sortCol" (click)="sort('id')">Number</th>
-      <th class="sortCol" (click)="sort('userName')">Name</th>
+      <th class="sortCol" (click)="sort('username')">Name</th>
 
       <th class="sortCol" (click)="sort('title')">Title</th>
       <th class="sortCol" (click)="sort('body')">Text</th>
@@ -11,7 +11,7 @@
 
     <tr *ngFor="let item of filterPlaceholdersArray">
       <td>{{ item.id }}</td>
-      <td>{{ item.userName }}</td>
+      <td>{{ item.username }}</td>
 
       <td>{{ item.title }}</td>
       <td>

@@ -1,5 +1,10 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div>
+    <select formControlName="userId" >
+      <option  *ngFor="let element of users$ | async" [value]="element.id">
+        {{ element.username }}
+      </option>
+    </select>
     <div>
       <label>Title: </label>
     </div>

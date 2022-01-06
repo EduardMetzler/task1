@@ -8,9 +8,9 @@ import { Router } from '@angular/router'
   providedIn: 'root',
 })
 export class PlaceholderService {
-  posts$ = new BehaviorSubject<OnePost[]>([])
+  posts$ = new BehaviorSubject<any[]>([])
 
-  users$ = new BehaviorSubject<OnePost[]>([])
+  users$ = new BehaviorSubject<any[]>([])
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -23,20 +23,21 @@ export class PlaceholderService {
         return this.posts$.next(posts)
       }
     })
+  }
+
+
+  getUsersList(){
     this.http
-      .get<any>('https://jsonplaceholder.typicode.com/users')
-      .subscribe((users) => {
-        if (this.users$.value.length === 0) {
-          const userArray = users.map((oneUser: any) => {
-            return { id: oneUser.id, username: oneUser.username }
-          })
+    .get<any>('https://jsonplaceholder.typicode.com/users')
+    .subscribe((users) => {
+      if (this.users$.value.length === 0) {
+        const userArray = users.map((oneUser: any) => {
+          return { id: oneUser.id, username: oneUser.username }
+        })
 
-          return this.users$.next(userArray)
-        }
-      })
-
- 
-
+        return this.users$.next(userArray)
+      }
+    })
   }
 
   deletePlaceholders(id: any) {
@@ -89,6 +90,7 @@ export class PlaceholderService {
       })
       .subscribe({
         next: (updatedPost: any) => {
+          console.log(updatedPost)
           const posts = this.posts$.getValue()
           const newPost = posts.map((post) => {
             return post.id === updatedPost.id ? updatedPost : post
@@ -99,7 +101,7 @@ export class PlaceholderService {
           this.posts$.next(newPost)
         },
         error: (e) => {
-          console.log('Failed to delete')
+          console.log('Failed to update')
         },
       })
   }
