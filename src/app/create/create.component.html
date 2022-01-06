@@ -2,9 +2,9 @@
   <div>
     <label>User Name:</label>
   </div>
-  <!-- (change)="userIdandNameSave($event)" -->
-  <select formControlName="userId" >
-    <option  *ngFor="let element of users$ | async" [value]="element.id">
+
+  <select formControlName="userId">
+    <option *ngFor="let element of users$ | async" [value]="element.id">
       {{ element.username }}
     </option>
   </select>

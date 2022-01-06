@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { BehaviorSubject, Observable } from 'rxjs'
-import { OnePost } from '../interface'
+import { OnePost, UsersIdAndName } from '../interface'
 import { Router } from '@angular/router'
 
 @Injectable({
   providedIn: 'root',
 })
 export class PlaceholderService {
-  posts$ = new BehaviorSubject<any[]>([])
+  posts$ = new BehaviorSubject<OnePost[]>([])
 
-  users$ = new BehaviorSubject<any[]>([])
+  users$ = new BehaviorSubject<UsersIdAndName[]>([])
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -31,7 +31,7 @@ export class PlaceholderService {
     .get<any>('https://jsonplaceholder.typicode.com/users')
     .subscribe((users) => {
       if (this.users$.value.length === 0) {
-        const userArray = users.map((oneUser: any) => {
+        const userArray = users.map((oneUser:UsersIdAndName) => {
           return { id: oneUser.id, username: oneUser.username }
         })
 
@@ -40,7 +40,7 @@ export class PlaceholderService {
     })
   }
 
-  deletePlaceholders(id: any) {
+  deletePlaceholders(id: number) {
     this.http.delete<any>(`${this.url}/${id}`).subscribe({
       next: () => {
         const posts = this.posts$.getValue()
@@ -55,7 +55,7 @@ export class PlaceholderService {
     })
   }
 
-  createPlaceholders(post: any) {
+  createPlaceholders(post: OnePost) {
     this.http
       .post<OnePost>(`${this.url}`, {
         id: post.id,
@@ -68,7 +68,6 @@ export class PlaceholderService {
           console.log(post.id)
           const posts = this.posts$.getValue()
           newPost.userId = post.userId,
-          newPost.userName = post.userName
           posts.push(newPost)
           console.log(posts)
 
@@ -81,6 +80,7 @@ export class PlaceholderService {
   }
 
   updatePlaceholders(post: OnePost) {
+    console.log(post)
     this.http
       .put<OnePost>(`${this.url}/${post.id}`, {
         id: post.id,
