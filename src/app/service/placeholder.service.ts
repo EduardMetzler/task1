@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { BehaviorSubject, Observable } from 'rxjs'
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
 import { OnePost, UsersIdAndName } from '../interface'
 import { Router } from '@angular/router'
+import { map } from 'rxjs/operators'
+
 
 @Injectable({
   providedIn: 'root',
@@ -12,16 +14,39 @@ export class PlaceholderService {
 
   users$ = new BehaviorSubject<UsersIdAndName[]>([])
 
+  usersById$ = this.users$.pipe(map((users)=>{
+    return users.reduce(( obj, user ) => {
+      return {
+        ...obj,
+        [ user.id ] : user,
+     
+      }
+    }, {} as {[key : number] : UsersIdAndName})
+  }))
+
+  postsWithUSers$ = combineLatest([this.posts$, this.usersById$]).pipe( map(([posts, usersById]) => {
+    return posts.map( post => {
+      return {
+        ...post,
+        username : usersById[post.userId].username
+      }
+    
+    })
+  }))
+
   constructor(private http: HttpClient, private router: Router) {}
 
   private url = 'https://jsonplaceholder.typicode.com/posts'
 
   getPlaceholders() {
+    if (this.posts$.value.length ) {
+      return;
+
+    }
     this.http.get<OnePost[]>(this.url).subscribe((posts) => {
-      if (this.posts$.value.length === 0) {
-        // console.log(posts)
-        return this.posts$.next(posts)
-      }
+      this.posts$.next(posts)
+   
+    
     })
   }
 

@@ -1,0 +1,16 @@
+{
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "[html]": {
+    "editor.formatOnSave": false
+  },
+  "html.completion.attributeDefaultValue": "doublequotes",
+  "editor.guides.bracketPairs": true,
+  "prettier.trailingComma": "all",
+  "prettier.bracketSpacing": true,
+  "prettier.singleQuote": true,
+  "prettier.disableLanguages": ["json", "html"],
+
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "tslint.rulesDirectory": "./node_modules/codelyzer"
+}

@@ -14,24 +14,21 @@ import { map } from 'rxjs/operators'
 export class PlaceholderComponent {
   posts$ = combineLatest([
     this.route.queryParamMap,
-    this.placeholderService.posts$,
-    this.placeholderService.users$,
+    this.placeholderService.postsWithUSers$,
+    // this.placeholderService.users$,
   ]).pipe(
-    map(([queryParamsMap, posts, userList]) => {
-      console.log(posts)
-      console.log(userList)
+    map(([queryParamsMap, posts]) => {
       const query = queryParamsMap.get('k')
 
-      userList.forEach((user: UsersIdAndName) => {
-        posts.forEach((post: OnePost) => {
-          if (post.userId == user.id) {
-            post.username = user.username
-          }
-        })
-      })
+      // userList.forEach((user: UsersIdAndName) => {
+      //   posts.forEach((post: OnePost) => {
+      //     if (post.userId == user.id) {
+      //       post.username = user.username
+      //     }
+      //   })
+      // })
 
       if (!query) {
-        console.log(posts)
         return posts
       }
 

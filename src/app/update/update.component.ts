@@ -76,5 +76,6 @@ export class UpdateComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.a.unsubscribe()
+    
   }
 }
